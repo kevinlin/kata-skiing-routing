@@ -8,7 +8,7 @@ class Node {
     private int altitude;
     private int pathDownFromPeak = 1;
     private int altitudeDropFromPeak = 0;
-    private Node skiDownFrom = null;
+    private Node parent = null;
 
     public Node(int x, int y, int altitude) {
         this.x = x;
@@ -28,12 +28,16 @@ class Node {
         return altitudeDropFromPeak;
     }
 
+    public Node getParent() {
+        return parent;
+    }
+
     public void identifyBestNeighbourToSkiDownFrom(Node[][] nodeMap) {
         List<Node> neighbours = getNeighbours(nodeMap);
         neighbours.forEach(neighbour -> {
             if (neighbour.altitude > altitude) {
-                if (isBetterPathDownFromPeak(neighbour) || (isEqualPathDwonFromPeak(neighbour) && hasBetterAltitudeDropFromPeak(neighbour))) {
-                    skiDownFrom = neighbour;
+                if (hasBetterPathDownFromPeak(neighbour) || (hasEqualPathDwonFromPeak(neighbour) && hasBetterAltitudeDropFromPeak(neighbour))) {
+                    parent = neighbour;
                     pathDownFromPeak = neighbour.pathDownFromPeak + 1;
                     altitudeDropFromPeak += (neighbour.altitude - altitude);
                 }
@@ -41,11 +45,11 @@ class Node {
         });
     }
 
-    private boolean isEqualPathDwonFromPeak(Node neighbour) {
+    private boolean hasEqualPathDwonFromPeak(Node neighbour) {
         return neighbour.pathDownFromPeak + 1 == pathDownFromPeak;
     }
 
-    private boolean isBetterPathDownFromPeak(Node neighbour) {
+    private boolean hasBetterPathDownFromPeak(Node neighbour) {
         return neighbour.pathDownFromPeak + 1 > pathDownFromPeak;
     }
 
@@ -73,7 +77,7 @@ class Node {
 
     @Override
     public String toString() {
-        return String.format("[%d, %d]@%d -> %s", x, y, altitude, skiDownFrom);
+        return String.format("[%d, %d]@%d -> %s", x, y, altitude, parent);
     }
 
 }

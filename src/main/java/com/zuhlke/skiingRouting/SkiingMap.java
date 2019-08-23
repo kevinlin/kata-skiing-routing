@@ -42,8 +42,13 @@ public class SkiingMap {
     private void findLongestPathDown() {
         getNodesAsStream().sorted(SORT_BY_ALTITUDE_DESC).forEachOrdered(node -> node.identifyBestNeighbourToSkiDownFrom(nodeMap));
 
-        Node bestRouteDestination = getNodesAsStream().min(SORT_BY_PATH_THEN_ALTITUDE_DROP_DESC).orElse(null);
-        System.out.println(bestRouteDestination);
+        Node destination = getNodesAsStream().min(SORT_BY_PATH_THEN_ALTITUDE_DROP_DESC).orElse(null);
+        Node startingPoint = destination;
+        while (startingPoint.getParent() != null) {
+            startingPoint = startingPoint.getParent();
+        }
+        System.out
+                .println(String.format("Path: %d, Altitude Down: %d, Starting: %s, Ending: %s", destination.getPathDownFromPeak(), destination.getAltitudeDropFromPeak(), startingPoint, destination));
     }
 }
 
