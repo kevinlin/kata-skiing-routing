@@ -130,7 +130,6 @@ public class SkiingMap {
         public String toString() {
             return String.format("[%d, %d]@%d -> %s", x, y, altitude, parent);
         }
-
     }
 }
 
