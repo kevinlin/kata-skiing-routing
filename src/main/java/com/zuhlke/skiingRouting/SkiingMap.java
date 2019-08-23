@@ -90,7 +90,7 @@ public class SkiingMap {
                     if (hasBetterPathDownFromPeak(neighbour) || (hasEqualPathDwonFromPeak(neighbour) && hasBetterAltitudeDropFromPeak(neighbour))) {
                         parent = neighbour;
                         pathDownFromPeak = neighbour.pathDownFromPeak + 1;
-                        altitudeDropFromPeak += (neighbour.altitude - altitude);
+                        altitudeDropFromPeak = neighbour.altitudeDropFromPeak + (neighbour.altitude - altitude);
                     }
                 }
             });
